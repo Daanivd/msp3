@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+     {% for recipe in recipes %}
+            {{recipe.name}}
+            {{recipe.howto}}
+            {{recipe.qpersons}}
+            {{recipe.ing01}}
+            {{recipe.quan01}}
+            {{recipe.unit01}}
+        {% endfor %}
+{% endblock %}

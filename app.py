@@ -13,6 +13,18 @@ mongo = PyMongo(app)
 @app.route('/recipes')    
 def recipes():
       return render_template("recipes.html", recipes=mongo.db.recipes.find())
+      
+@app.route('/create')
+def create():
+     return render_template('create.html')
+     
+@app.route('/alter')
+def alter():
+     return render_template('alter.html') 
+     
+@app.route('/delete')
+def delete():
+     return render_template('delete.html')    
     
 
 if __name__ == '__main__':

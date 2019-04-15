@@ -10,13 +10,13 @@ app.config["MONGO_URI"] = os.getenv('MONGO_URI')
 mongo = PyMongo(app)
 
 @app.route('/')
-@app.route('/recipes')    
+@app.route('/search')    
 def recipes():
       return render_template("recipes.html", recipes=mongo.db.recipes.find())
       
 @app.route('/create')
 def create():
-     return render_template('create.html')
+     return render_template('create.html', types=mongo.db.type.find())
      
 @app.route('/alter')
 def alter():
@@ -26,7 +26,13 @@ def alter():
 def delete():
      return render_template('delete.html')    
     
-
+@app.route('/add_recipe', methods=['POST'])
+def add_recipe():
+    recipes = mongo.db.recipes
+    recipes.insert_one(request.form.to_dict())
+    return redirect(url_for('recipes'))
+    
+    
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
             port=int(os.environ.get('PORT')),

@@ -4,17 +4,15 @@
 <head>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-    <link rel="stylesheet" href="static/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="/static/css/style.css" type="text/css" />
 </head>
 
 <body>
     <div class="row">
         <div class="col s12">
             <ul class="tabs">
-                <li class="tab col s6"><a href="/">Search Recipes</a>
-                </li>
-                <li class="tab col s6"><a href="{{url_for('create')}}" target=blank>Add Recipe</a></li>
-              
+                <li class="tab col s6"><a href="/">Search Recipes</a></li>
+                <li class="tab col s6"><a href="{{url_for('create')}}">Add Recipe</a></li>
             </ul>
         </div>
     </div>
@@ -24,7 +22,7 @@
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-    <script src="static/js/functions.js"></script>
+    <script src="/static/js/functions.js"></script>
     <script>
         $(document).ready(function() {
             $('select').material_select();

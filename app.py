@@ -13,7 +13,13 @@ mongo = PyMongo(app)
 @app.route('/search')    
 def recipes():
       return render_template("recipes.html", recipes=mongo.db.recipes.find())
-      
+
+@app.route('/recipes/<recipe_id>')
+def view_recipe(recipe_id):
+    the_recipe =  mongo.db.recipes.find_one({"_id": ObjectId(recipe_id)})
+    return render_template('recipe.html', recipe=the_recipe,
+    )
+ 
 @app.route('/create')
 def create():
      return render_template('create.html', types=mongo.db.type.find())
@@ -21,6 +27,7 @@ def create():
 @app.route('/alter')
 def alter():
      return render_template('alter.html') 
+
      
 @app.route('/delete')
 def delete():
@@ -31,6 +38,13 @@ def add_recipe():
     recipes = mongo.db.recipes
     recipes.insert_one(request.form.to_dict())
     return redirect(url_for('recipes'))
+    
+@app.route('/search_recipe', methods=['POST'])
+def search_recipe():
+    searchKey = request.form.get("searchKey")
+    print(searchKey)
+    searchResults = mongo.db.recipes.find({"recipeKeywords": searchKey})
+    return redirect(url_for('recipes'))    
     
     
 if __name__ == '__main__':

@@ -17,10 +17,7 @@ def recipes():
 @app.route('/recipes/<recipe_id>')
 def view_recipe(recipe_id):
     the_recipe =  mongo.db.recipes.find_one({"_id": ObjectId(recipe_id)})
-    
-    the_ingredients = mongo.db.recipes.distinct('ingredients')
-    the_allergens =  mongo.db.recipes.distinct('allergens')
-    return render_template('recipe.html', recipe=the_recipe, ingredients=the_ingredients, allergens=the_allergens
+    return render_template('recipe.html', recipe=the_recipe,
     )
  
 @app.route('/create')
@@ -39,7 +36,13 @@ def delete():
 @app.route('/add_recipe', methods=['POST'])
 def add_recipe():
     recipes = mongo.db.recipes
-    recipes.insert_one(request.form.to_dict())
+    recipeName = request.form['recipe_name']
+    ingredients =  request.form.getlist('ingredients')
+    allergens = request.form.getlist('allergens')
+    keywords = request.form.getlist('keywords')
+    print(ingredients)
+   # recipes.insert_one(request.form.to_dict())
+    recipes.insert_one({'name': recipeName, 'ingredients': ingredients, 'allergens': allergens})
     return redirect(url_for('recipes'))
     
 @app.route('/search_recipe', methods=['POST'])

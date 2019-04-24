@@ -10,36 +10,46 @@
                 <label for="icon_prefix">Recipe Name</label>
             </div>
 
-            <!--TYPE OF FOOD-->
-            <div class="row">
-                <div class="input-field col s12">
-                    <i class="material-icons prefix">poll</i>
-                    <select id="type" name="type">
-                  <option value="" disabled selected>Choose Type</option>
-                  {% for type in types %}
-                      <option value="{{type.type}}">{{type.type}}</option>
-                  {% endfor %}
-                </select>
-                    <label>Type</label>
-                </div>
+            <!--How many people -->
+            <div class="input-field col s12">
+                <select name="qperson">
+      <option value="" disabled selected>For how many people?</option>
+      <option value="1">1 person</option>
+      <option value="2">2 persons</option>
+      <option value="3">3 persons</option>
+      <option value="3">4 persons</option>
+      <option value="3">5 persons</option>
+      <option value="3">6 persons</option>
+      <option value="3">7 persons</option>
+      <option value="3">8 persons</option>
+    </select>
+                <label>Materialize Select</label>
+            </div>
 
-                <!--ALLERGENS -->
-                <div class="col s2">
-                    <input value="gluten" type="checkbox" id="gluten" name="allergens">
-                    <label for="gluten">Gluten</label>
-                </div>
-                <div class="col s2">
-                    <input value="shellfish" type="checkbox" id="shellfish" name="allergens">
-                    <label for="shellfish">shellfish</label>
-                </div>
-                <div class="col s2">
-                    <input value="peanuts" type="checkbox" id="peanuts" name="allergens">
-                    <label for="peanuts">Peanuts</label>
-                </div>
-                <div class="col s2">
-                    <input value="lactose" type="checkbox" id="lactose" name="allergens">
-                    <label for="lactose">Lactose</label>
-                </div>
+            <!--ALLERGENS -->
+            <div class="col s2">
+                <input value="gluten" type="checkbox" id="gluten" name="allergens">
+                <label for="gluten">Gluten</label>
+            </div>
+            <div class="col s2">
+                <input value="shellfish" type="checkbox" id="shellfish" name="allergens">
+                <label for="shellfish">shellfish</label>
+            </div>
+            <div class="col s2">
+                <input value="peanuts" type="checkbox" id="peanuts" name="allergens">
+                <label for="peanuts">Peanuts</label>
+            </div>
+            <div class="col s2">
+                <input value="lactose" type="checkbox" id="lactose" name="allergens">
+                <label for="lactose">Lactose</label>
+            </div>
+        </div>
+
+        <!--Directions -->
+        <div class="row directions">
+            <div class="input-field col s12">
+                <textarea name="directions" class="materialize-textarea"></textarea>
+                <label for="directions">Directions</label>
             </div>
 
             <!--INGREDIENTS -->
@@ -49,18 +59,18 @@
                     <label for="ingredients">ingredient</label>
                 </div>
             </div>
-            
+
             <a class="waves-effect waves-light btn-small addIngredient"><i class="material-icons left">add</i>Add Ingredient</a>
-            
+
             <!--Keywords-->
-             <div class="row keywords">
+            <div class="row keywords">
                 <div class="input-field col s4">
                     <input id="keywords" type="text" name="keywords">
                     <label for="keywords">keyword</label>
                 </div>
             </div>
-            
-             <a class="waves-effect waves-light btn-small addKeyword"><i class="material-icons left">add</i>Add Keyword</a>
+
+            <a class="waves-effect waves-light btn-small addKeyword"><i class="material-icons left">add</i>Add Keyword</a>
 
             <!--SUBMIT DATA -->
             <div class="row">

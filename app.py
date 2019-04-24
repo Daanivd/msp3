@@ -9,6 +9,7 @@ app.config["MONGO_URI"] = os.getenv('MONGO_URI')
 
 mongo = PyMongo(app)
 
+
 @app.route('/')
 @app.route('/search')    
 def recipes():
@@ -24,9 +25,22 @@ def view_recipe(recipe_id):
 def create():
      return render_template('create.html', types=mongo.db.type.find())
      
-@app.route('/alter')
-def alter():
-     return render_template('alter.html') 
+@app.route('/alter/<recipe_id>')
+def alter(recipe_id):
+     the_recipe =  mongo.db.recipes.find_one({"_id": ObjectId(recipe_id)})
+     recipes = mongo.db.recipes
+     return render_template('alter.html', recipe=the_recipe) 
+    
+#@app.route('/change_recipe/<recipe_id>', methods=['POST'])
+#def change_recipe(recipe_id):
+#     the_recipe =  mongo.db.recipes.find_one({"_id": ObjectId(recipe_id)})
+#     directions = request.form['directions']
+#     recipeName = request.form['recipe_name']
+#     ingredients =  request.form.getlist('ingredients')
+#     allergens = request.form.getlist('allergens')
+#     keywords = request.form.getlist('keywords')
+#     the_recipe.update_one({'name': recipeName, 'ingredients': ingredients, 'allergens': allergens, 'keywords': keywords})
+#     
 
      
 @app.route('/delete')
@@ -36,13 +50,13 @@ def delete():
 @app.route('/add_recipe', methods=['POST'])
 def add_recipe():
     recipes = mongo.db.recipes
+    qperson = request.form['qperson']
+    directions = request.form['directions']
     recipeName = request.form['recipe_name']
     ingredients =  request.form.getlist('ingredients')
     allergens = request.form.getlist('allergens')
     keywords = request.form.getlist('keywords')
-    print(ingredients)
-   # recipes.insert_one(request.form.to_dict())
-    recipes.insert_one({'name': recipeName, 'ingredients': ingredients, 'allergens': allergens})
+    recipes.insert_one({'name': recipeName, 'qperson': qperson, 'ingredients': ingredients, 'allergens': allergens, 'keywords': keywords, 'views': 0})
     return redirect(url_for('recipes'))
     
 @app.route('/search_recipe', methods=['POST'])

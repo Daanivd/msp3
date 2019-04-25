@@ -74,7 +74,8 @@
         <div class="row">
             {% for recipe in recipes %}
             <div class="col s3 recipe">
-             {{recipe.recipe_name}}
+                <a href="/recipes/{{recipe._id}}">{{recipe.recipeName}}</a>
+            
             </div>
              {% endfor %}
         </div>

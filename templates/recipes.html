@@ -74,21 +74,23 @@
         <div class="row">
             {% for recipe in recipes %}
             <div class="col s3 recipe">
-                <a href="/recipes/{{recipe._id}}">{{recipe.recipeName}}</a>
+                <a href="/recipes/{{recipe._id}}">{{recipe.recipeName}} ({{recipe.views}} views)</a>
             
             </div>
              {% endfor %}
         </div>
+        
+        
     </div>
     <div class="col s6 col m9">
-
+      Amount of recipes:  {{recipes.count()}} recipes
     </div>
 
 
 
 </div>
 
-</form>
+
 </div>
 <div class="col-12 col-md-9"></div>
 <div class="col-6 col-md-9"></div>

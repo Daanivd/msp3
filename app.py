@@ -2,6 +2,7 @@ import os
 from flask import Flask, render_template, redirect, request, url_for
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId 
+import datetime
 
 app = Flask(__name__)
 app.config["MONGO_DBNAME"] = 'recipeDB'
@@ -49,14 +50,16 @@ def delete():
     
 @app.route('/add_recipe', methods=['POST'])
 def add_recipe():
+    dateEntered = datetime.datetime.now().strftime("%d-%m-%y")
     recipes = mongo.db.recipes
-    qperson = request.form['qperson']
+    servings = request.form['servings']
+    prepTime = request.form['prepTime']
     directions = request.form['directions']
     recipeName = request.form['recipe_name']
     ingredients =  request.form.getlist('ingredients')
     allergens = request.form.getlist('allergens')
     keywords = request.form.getlist('keywords')
-    recipes.insert_one({'name': recipeName, 'qperson': qperson, 'ingredients': ingredients, 'allergens': allergens, 'keywords': keywords, 'views': 0})
+    recipes.insert_one({'recipeName': recipeName, 'dateEntered': dateEntered, 'servings': servings, 'prepTime': prepTime, 'ingredients': ingredients, 'allergens': allergens, 'keywords': keywords, 'views': 0})
     return redirect(url_for('recipes'))
     
 @app.route('/search_recipe', methods=['POST'])

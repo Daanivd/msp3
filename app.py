@@ -18,9 +18,16 @@ def recipes():
 
 @app.route('/recipes/<recipe_id>')
 def view_recipe(recipe_id):
+    
+    #views = mongo.db.recipes.find_one({"_id": ObjectId(recipe_id)}, {"views": 1, "_id":0})
+    #views = int(views) + 1
+    
+    #
     the_recipe =  mongo.db.recipes.find_one({"_id": ObjectId(recipe_id)})
-    return render_template('recipe.html', recipe=the_recipe,
-    )
+    views = the_recipe['views']
+    views = views + 1
+    mongo.db.recipes.update_one({"_id": ObjectId(recipe_id)}, {"$set": {"views": views}})
+    return render_template('recipe.html', recipe=the_recipe, views=views)
  
 @app.route('/create')
 def create():

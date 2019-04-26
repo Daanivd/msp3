@@ -109,9 +109,7 @@
 
 </div>
 </div>
-<div class="col s6 col m9">
 
-</div>
 
 
 
@@ -122,9 +120,15 @@
 <div class="row">
 
 
-    <form method="get" action="/edit/{{recipe._id}}">
-        <button class="btn waves-effect waves-light" type="submit">Continue</button>
+    <form method="GET" action="/edit/{{recipe._id}}">
+        <button class="btn waves-effect waves-light" type="submit">Edit Recipe</button>
         <i class="material-icons right">edit</i>
+    </form>
+
+    <form method="GET" action="{{ url_for('delete', recipe_id=recipe._id) }}">
+        
+        <button class="btn waves-effect waves-light" type="submit">Delete Recipe</button>
+        <i class="material-icons right">Delete</i>
     </form>
 </div>
 

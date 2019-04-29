@@ -3,24 +3,6 @@
 
 <div class="row">
     <div class="col s3 checkboxes">
-        <h2>Types</h2>
-        <div>
-            <input type="checkbox" id="breakfast">
-            <label for="breakfast">Breakfast</label>
-        </div>
-        <div>
-            <input type="checkbox" id="lunch">
-            <label for="lunch">Lunch</label>
-        </div>
-        <div>
-            <input type="checkbox" id="dinner">
-            <label for="dinner">Dinner</label>
-        </div>
-        <div>
-            <input type="checkbox" id="desert">
-            <label for="desert">Desert</label>
-        </div>
-
         <h2>Diet</h2>
         <div>
             <input type="checkbox" id="vegetarian">
@@ -79,15 +61,9 @@
                 <li style="list-style-type:disc;">{{ingredient}}</li>
                 {% endfor %}
             </ul>
-
-            <h4>Allergens</h4>
-
-            <ul>
-                {% for allergen in recipe.allergens %}
-                <li style="list-style-type:disc;">{{allergen}}</li>
-                {% endfor %}
-            </ul>
-
+            
+            <span>Allergens:</span> {% for allergen in recipe.allergens %} <span>{{allergen}}, </span> {% endfor %}</span><br>
+            <span>Keywords:</span> {% for keyword in recipe.keywords %} <span>{{keyword}}, </span> {% endfor %}</span>
 
 
         </div>
@@ -121,14 +97,13 @@
 
 
     <form method="GET" action="/edit/{{recipe._id}}">
-        <button class="btn waves-effect waves-light" type="submit">Edit Recipe</button>
-        <i class="material-icons right">edit</i>
+        <button class="btn waves-effect waves-light" type="submit">Edit Recipe
+        <i class="material-icons lefti">edit</i></button>
     </form>
 
     <form method="GET" action="{{ url_for('delete', recipe_id=recipe._id) }}">
-        
-        <button class="btn waves-effect waves-light" type="submit">Delete Recipe</button>
-        <i class="material-icons right">Delete</i>
+        <button class="btn waves-effect waves-light" type="submit">Delete Recipe
+        <i class="material-icons left">delete_forever</i></button>
     </form>
 </div>
 

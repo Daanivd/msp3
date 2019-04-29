@@ -3,41 +3,7 @@
 
 <div class="row">
     <div class="col s3 checkboxes">
-        <h2>Diet</h2>
-        <div>
-            <input type="checkbox" id="vegetarian">
-            <label for="vegetarian">Vegetarian</label>
-        </div>
-        <div>
-            <input type="checkbox" id="vegan">
-            <label for="vegan">Vegan</label>
-        </div>
-        <div>
-            <input type="checkbox" id="meat">
-            <label for="meat">Meat</label>
-        </div>
-        <div>
-            <input type="checkbox" id="fish">
-            <label for="fish">Fish</label>
-        </div>
-
-        <h2>Allergens</h2>
-        <div>
-            <input type="checkbox" id="gluten">
-            <label for="gluten">Gluten</label>
-        </div>
-        <div>
-            <input type="checkbox" id="shellfish">
-            <label for="shellfish">shellfish</label>
-        </div>
-        <div>
-            <input type="checkbox" id="peanuts">
-            <label for="peanuts">Peanuts</label>
-        </div>
-        <div>
-            <input type="checkbox" id="lactose">
-            <label for="lactose">Lactose</label>
-        </div>
+      
 
 
     </div>
@@ -61,41 +27,18 @@
                 <li style="list-style-type:disc;">{{ingredient}}</li>
                 {% endfor %}
             </ul>
-            
+
             <span>Allergens:</span> {% for allergen in recipe.allergens %} <span>{{allergen}}, </span> {% endfor %}</span><br>
             <span>Keywords:</span> {% for keyword in recipe.keywords %} <span>{{keyword}}, </span> {% endfor %}</span>
-
-
         </div>
-
-
-
-
 
         <div class="col s4">
             <h4>Instructions</h4>
             {{recipe.directions}}
         </div>
     </div>
-
-</div>
-
-
-
-
-</div>
-</div>
-
-
-
-
-</div>
-
-
 </div>
 <div class="row">
-
-
     <form method="GET" action="/edit/{{recipe._id}}">
         <button class="btn waves-effect waves-light" type="submit">Edit Recipe
         <i class="material-icons lefti">edit</i></button>

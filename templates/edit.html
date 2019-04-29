@@ -1,0 +1,82 @@
+{% extends 'base.html' %} {% block content %}
+
+<h1>Change existing recipe</h1>
+<div class="row">
+    <form action="{{ url_for('submit_edit', recipe_id=recipe._id) }}" method="POST" class="col s12">
+        <div class="row">
+            <div class="input-field col s12">
+                <input id="recipe_name" name="recipe_name" type="text" value="{{recipe.recipeName}}">
+                <label for="icon_prefix"></label>
+            </div>
+
+
+            <div class="input-field col s4">
+                <select multiple name="diet">
+                  {% for diet in types %}
+                  {% if diet.type in recipe.diet %}
+                  <option value="{{diet.type}}" selected>{{diet.type}}</option>
+                  {% else %}
+                  <option value="{{diet.type}}">{{diet.type}}</option>
+                  {% endif %}
+                  {% endfor %}
+                </select>
+                <label>Select Dietary Type</label>
+            </div>
+
+            <!-- Allergens -->
+            <div class="input-field col s4">
+                <select multiple name="allergens">
+                  {% for allergen in allergens %}
+                  {% if allergen.allergen in recipe.allergens %}
+                  <option value="{{allergen.allergen}}" selected>{{allergen.allergen}}</option>
+                  {% else %}
+                  <option value="{{allergen.allergen}}">{{allergen.allergen}}</option>
+                  {% endif %}
+                  {% endfor %}
+                </select>
+                <label>Select Allergens</label>
+            </div>
+
+        <!--Directions -->
+        <div class="row directions">
+            <div class="input-field col s12">
+                <textarea name="directions" class="materialize-textarea">{{recipe.directions}}</textarea>
+                <label for="directions">Directions</label>
+            </div>
+
+
+            <!--INGREDIENTS -->
+            <div class="row ingredients">
+                {% for ingredient in recipe.ingredients %}
+                <div class="input-field col s4">
+                    <input id="ingredients" type="text" name="ingredients" value="{{ingredient}}">
+                    <label for="ingredients">Ingredient</label>
+                </div>
+                {% endfor %}
+            </div>
+
+            <a class="waves-effect waves-light btn-small addIngredient"><i class="material-icons left">add</i>Add Ingredient</a>
+
+            <!--Keywords-->
+            <div class="row keywords">
+                
+                <div class="input-field col s4">
+                    <input id="keywords" type="text" name="keywords" value= "{% for keyword in recipe.keywords %} {{keyword}}, {% endfor %} ">
+                    <label for="keywords">Keyword</label>
+                </div>
+                
+            </div>
+
+
+            <!--SUBMIT DATA -->
+            <div class="row">
+                <button class="btn waves-effect waves-light" type="submit">Edit Recipe
+                <i class="material-icons right">playlist_add</i>
+             </button>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+{% endblock %}

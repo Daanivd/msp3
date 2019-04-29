@@ -28,15 +28,34 @@ def view_recipe(recipe_id):
  
 @app.route('/create')
 def create():
-     return render_template('create.html', types=mongo.db.type.find())
+     return render_template('create.html', types=mongo.db.type.find(), allergens=mongo.db.allergens.find())
+     
+@app.route('/add_recipe', methods=['POST'])
+def add_recipe():
+    dateEntered = datetime.datetime.now().strftime("%d-%m-%y")
+    recipes = mongo.db.recipes
+    servings = request.form['servings']
+    prepTime = request.form['prepTime']
+    directions = request.form['directions']
+    recipeName = request.form['recipe_name']
+    ingredients =  request.form.getlist('ingredients')
+    allergens = request.form.getlist('allergens')
+    diet = request.form.getlist('diet')
+    keywords = request.form['keywords']
+    keywords = keywords.split(',')
+    
+    recipes.insert_one({'recipeName': recipeName, 'dateEntered': dateEntered, 'servings': servings, 'prepTime': prepTime, 'diet': diet, 'ingredients': ingredients, 'directions': directions, 'allergens': allergens, 'keywords': keywords, 'views': 0})
+    
+    return redirect(url_for('recipes'))
+         
      
 @app.route('/edit/<recipe_id>')
 def edit(recipe_id):
      the_recipe =  mongo.db.recipes.find_one({"_id": ObjectId(recipe_id)})
      recipes = mongo.db.recipes
-     return render_template('edit.html', recipe=the_recipe) 
+     return render_template('edit.html', recipe=the_recipe, types=mongo.db.type.find(), allergens=mongo.db.allergens.find()) 
     
-@app.route('/submit_edit/<recipe_id>', methods=['GET','POST'])
+@app.route('/submit_edit/<recipe_id>', methods=['POST'])
 def submit_edit(recipe_id):
     #recipe_id = request.form['_id']
     
@@ -44,8 +63,9 @@ def submit_edit(recipe_id):
     recipeName = request.form['recipe_name']
     ingredients =  request.form.getlist('ingredients')
     allergens = request.form.getlist('allergens')
-    keywords = request.form.getlist('keywords')
-    mongo.db.recipes.update_one({"_id": ObjectId(recipe_id)}, {"$set": {'recipeName': recipeName, 'ingredients': ingredients, 'directions': directions, 'allergens': allergens, 'keywords': keywords}})
+    keywordString = request.form('keywords')
+    keywords = keywordString.split(",")
+    mongo.db.recipes.update_one({"_id": ObjectId(recipe_id)}, {'$set': {'recipeName': recipeName, 'ingredients': ingredients, 'directions': directions, 'allergens': allergens, 'keywords': keywords}})
     the_recipe = mongo.db.recipes.find_one({"_id": ObjectId(recipe_id)})
     views = the_recipe['views']
     views = views + 1
@@ -58,26 +78,12 @@ def delete(recipe_id):
      mongo.db.recipes.delete_one({"_id": ObjectId(recipe_id)})
      return redirect(url_for('recipes'))   
     
-@app.route('/add_recipe', methods=['POST'])
-def add_recipe():
-    dateEntered = datetime.datetime.now().strftime("%d-%m-%y")
-    recipes = mongo.db.recipes
-    servings = request.form['servings']
-    prepTime = request.form['prepTime']
-    directions = request.form['directions']
-    recipeName = request.form['recipe_name']
-    ingredients =  request.form.getlist('ingredients')
-    allergens = request.form.getlist('allergens')
-    keywords = request.form.getlist('keywords')
-    recipes.insert_one({'recipeName': recipeName, 'dateEntered': dateEntered, 'servings': servings, 'prepTime': prepTime, 'ingredients': ingredients, 'directions': directions, 'allergens': allergens, 'keywords': keywords, 'views': 0})
-    return redirect(url_for('recipes'))
-    
+
 @app.route('/search_recipe', methods=['POST'])
 def search_recipe():
     searchKey = request.form.get("searchKey")
-    print(searchKey)
     searchResults = mongo.db.recipes.find({"recipeKeywords": searchKey})
-    return redirect(url_for('recipes'))    
+    return redirect(url_for('recipes', recipes=searchResults))    
     
     
 if __name__ == '__main__':

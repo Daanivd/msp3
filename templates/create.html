@@ -9,88 +9,91 @@
                 <input id="recipe_name" name="recipe_name" type="text">
                 <label for="icon_prefix">Recipe Name</label>
             </div>
-            
+
             <div class="input-field col s3">
                 <input name="prepTime" type="text"></input>
                 <label for="icon_prefix">Time to prepare</label>
-            </div>    
+            </div>
 
             <!--How many servings -->
             <div class="input-field col s3">
                 <select name="servings">
              
-      <option value="1">1 serving</option>
-      <option value="2">2 servings</option>
-      <option value="3">3 servings</option>
-      <option value="3">4 servings</option>
-      <option value="3">5 servings</option>
-      <option value="3">6 servings</option>
-      <option value="3">7 servings</option>
-      <option value="3">8 servings</option>
-    </select>
+                  <option value="1">1 serving</option>
+                  <option value="2">2 servings</option>
+                  <option value="3">3 servings</option>
+                  <option value="4">4 servings</option>
+                  <option value="5">5 servings</option>
+                  <option value="6">6 servings</option>
+                  <option value="7">7 servings</option>
+                  <option value="8">8 servings</option>
+                </select>
                 <label>How many servings?</label>
             </div>
 
-            <!--ALLERGENS -->
-            <div class="col s2">
-                <input value="gluten" type="checkbox" id="gluten" name="allergens">
-                <label for="gluten">Gluten</label>
-            </div>
-            <div class="col s2">
-                <input value="shellfish" type="checkbox" id="shellfish" name="allergens">
-                <label for="shellfish">shellfish</label>
-            </div>
-            <div class="col s2">
-                <input value="peanuts" type="checkbox" id="peanuts" name="allergens">
-                <label for="peanuts">Peanuts</label>
-            </div>
-            <div class="col s2">
-                <input value="lactose" type="checkbox" id="lactose" name="allergens">
-                <label for="lactose">Lactose</label>
-            </div>
-        </div>
-
-        <!--Directions -->
-        <div class="row directions">
-            <div class="input-field col s12">
-                <textarea name="directions" class="materialize-textarea"></textarea>
-                <label for="directions">Directions</label>
+            <!--Dietary Type -->
+            <div class="input-field col s4">
+                <select multiple name="diet">
+                  {% for diet in types %}
+                  <option value="{{diet.type}}">{{diet.type}}</option>
+                  {% endfor %}
+                </select>
+                <label>Select Dietary Type</label>
             </div>
 
-            <!--INGREDIENTS -->
-            <div class="row ingredients">
-                <div class="input-field col s4">
-                    <input id="ingredients" type="text" name="ingredients">
-                    <label for="ingredients">ingredient</label>
+            <!-- Allergens -->
+            <div class="input-field col s4">
+                <select multiple name="allergens">
+                  {% for allergen in allergens %}
+                  <option value="{{allergen.allergen}}">{{allergen.allergen}}</option>
+                  {% endfor %}
+                </select>
+                <label>Select Allergens</label>
+            </div>
+
+
+            <!--Directions -->
+            <div class="row directions">
+                <div class="input-field col s12">
+                    <textarea name="directions" class="materialize-textarea"></textarea>
+                    <label for="directions">Directions</label>
                 </div>
-            </div>
 
-            <a class="waves-effect waves-light btn-small addIngredient"><i class="material-icons left">add</i>Add Ingredient</a>
-
-            <!--Keywords-->
-            <div class="row keywords">
-                <div class="input-field col s4">
-                    <input id="keywords" type="text" name="keywords">
-                    <label for="keywords">keyword</label>
+                <!--INGREDIENTS -->
+                <div class="row ingredients">
+                    <div class="input-field col s4">
+                        <input id="ingredients" type="text" name="ingredients">
+                        <label for="ingredients">Ingredient</label>
+                    </div>
                 </div>
-            </div>
 
-            <a class="waves-effect waves-light btn-small addKeyword"><i class="material-icons left">add</i>Add Keyword</a>
 
-            <!--SUBMIT DATA -->
-            <div class="row">
-                <button class="btn waves-effect waves-light" type="submit">Add Recipe
+                <a class="waves-effect waves-light btn-small addIngredient col s12"><i class="material-icons left">add</i>Add Ingredient</a>
+
+                <!--Keywords-->
+                <div class="row keywords">
+                    <div class="input-field col s4">
+                        <input id="keywords" type="text" name="keywords">
+                        <label for="keywords">keyword</label>
+                    </div>
+                </div>
+
+
+
+                <!--SUBMIT DATA -->
+                <div class="row">
+                    <button class="btn waves-effect waves-light" type="submit">Add Recipe
                 <i class="material-icons right">playlist_add</i>
              </button>
+                </div>
+
+
             </div>
-
-
-        </div>
 
     </form>
 
 
 
-</div>
+    </div>
 
-{% endblock %}
+    {% endblock %}

@@ -7,7 +7,7 @@ import datetime
 
 app = Flask(__name__)
 app.config['MONGO_DBNAME'] = 'recipeDB'
-app.config['MONGO_URI'] = os.getenv('MONGO_URI', 'mongodb://localhost:27017')
+app.config['MONGO_URI'] = os.getenv('MONGO_URI', 'mongodb://localhost/recipeDB')
 
 
 

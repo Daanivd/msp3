@@ -73,11 +73,33 @@
     </div>
 
 
-    <div class="col s6">
+   <div class="col s12 m6">
+        <h2>Most Popular Recipes</h2>
+        {% for recipeV in recipesV %}
+        <div class="col s12 m6">
+            <a class='dropdown-button btn' href='#' data-activates='{{recipeV._id}}'>{{recipeV.recipeName}}</a>
+            <ul id='{{recipeV._id}}' class='dropdown-content'>
+                <li><a href="/recipe/{{recipeV._id}}">{{recipeV.recipeName}} ({{recipeV.prepTime}})</a></li>
+                <li>
+                    <p>Allergens: {% for allergen in recipeV.allergens %} {{allergen}} {% endfor %}</p>
+                </li>
+
+                <li>
+                    <p>Keywords: {% for keyword in recipeV.keywords %} {{keyword}} {% endfor %}</p>
+                </li>
+                <li>
+                    <p>{{recipeV.views}} views since {{recipeV.dateEntered}}</p>
+                </li>
+            </ul>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="col s12 m6">
         <h2>Most Recent Recipes</h2>
 
         {% for recipe in recipes %}
-        <div class="col s6">
+        <div class="col s12 m6">
             <a class='dropdown-button btn' href='#' data-activates='{{recipe._id}}'>{{recipe.recipeName}}</a>
             <ul id='{{recipe._id}}' class='dropdown-content'>
                 <li><a href="/recipe/{{recipe._id}}">{{recipe.recipeName}} ({{recipe.prepTime}})</a></li>
@@ -94,33 +116,6 @@
             </ul>
         </div>
         <br>
-        {% endfor %}
-    </div>
-
-
-
-
-
-
-    <div class="col s6">
-        <h2>Most Popular Recipes</h2>
-        {% for recipeV in recipesV %}
-        <div class="col s6">
-            <a class='dropdown-button btn' href='#' data-activates='{{recipeV._id}}'>{{recipeV.recipeName}}</a>
-            <ul id='{{recipeV._id}}' class='dropdown-content'>
-                <li><a href="/recipe/{{recipeV._id}}">{{recipeV.recipeName}} ({{recipeV.prepTime}})</a></li>
-                <li>
-                    <p>Allergens: {% for allergen in recipeV.allergens %} {{allergen}} {% endfor %}</p>
-                </li>
-
-                <li>
-                    <p>Keywords: {% for keyword in recipeV.keywords %} {{keyword}} {% endfor %}</p>
-                </li>
-                <li>
-                    <p>{{recipeV.views}} views since {{recipeV.dateEntered}}</p>
-                </li>
-            </ul>
-        </div>
         {% endfor %}
     </div>
 </div>

@@ -8,8 +8,9 @@ import datetime
 app = Flask(__name__)
 app.config['MONGO_DBNAME'] = 'recipeDB'
 app.config['MONGO_URI'] = os.getenv('MONGO_URI', 'mongodb://localhost')
+#app.config['MONGO_URI'] = MONGO_URI
 
-print(os.getenv('MONGO_URI'))
+
 
 
 mongo = PyMongo(app)

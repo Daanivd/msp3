@@ -7,7 +7,7 @@ import datetime
 
 app = Flask(__name__)
 app.config['MONGO_DBNAME'] = 'recipeDB'
-app.config['MONGO_URI'] = os.getenv('MONGO_URI', 'mongodb://localhost:27017/recipeDB')
+app.config['MONGO_URI'] = os.getenv('MONGO_URI', 'mongodb://localhost')
 
 
 
@@ -137,5 +137,5 @@ def search_recipes():
     
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
-            port=int(os.environ.get('PORT')),
+            port=27017,
             debug=True)

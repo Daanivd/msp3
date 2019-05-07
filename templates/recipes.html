@@ -1,13 +1,21 @@
 {% extends 'base.html' %} {% block content %}
 
-<h2>Types</h2>
-
+<!-- TOP ROW MENU -->
 <div class="row">
+    <div class="col s12">
+        <ul class="tabs">
+            <li id="search"class="tab col s6"><a href="{{ url_for('recipes', page=1) }}" target="_self">Search Recipes</a></li>
+            <li id="add" class="tab col s6"><a href="{{ url_for('create') }}" target="_self">Add Recipe</a></li>
+        </ul>
+    </div>
+</div>
 
+<!--FILTER-->
+<div class="row">
     <form action="{{ url_for('filter_recipe') }}" method="POST" class="col s12">
         <div class="row">
             <!--Dietary Type -->
-            <div class="input-field col s4">
+            <div class="input-field col s5">
                 <select multiple name="diet">
                   {% for diet in types %}
                   {% if diet.type in dietF %}
@@ -21,7 +29,7 @@
             </div>
 
             <!-- Allergens -->
-            <div class="input-field col s4">
+            <div class="input-field col s5">
                 <select multiple name="allergens">
                   {% for allergen in allergens %}
                   {% if allergen.allergen in allergensF %}
@@ -35,62 +43,109 @@
                 <label>Select Allergens</label>
             </div>
 
-            <div class="row">
+
+            <div class="col s2">
                 <button class="btn waves-effect waves-light" type="submit">Filter
                 <i class="material-icons right">find_in_page</i>
              </button>
             </div>
-
     </form>
+    </div>
+</div>
 
+<!-- FILTERS -->
+<div class="row">
     {% for diet in dietF %}
-    <span>{{diet}}</span> {% endfor %} {% for allergen in allergensF %}
-    <span>{{allergen}}</span> {% endfor %}
+    <div id="{{diet}} " class="chip col s1">
+        {{diet}}
+        <i class="close material-icons">close</i>
+    </div>{% endfor %} {% for allergen in allergensF %}
+    <div id="{{allergen}}" class="chip col s1">
+        {{allergen}}
+        <i class="close material-icons">close</i>
+    </div> {% endfor %}
+</div>
 
-    </div>
-    <div class="col s9 search">
-        <div class="row">
-            <form action="{{ url_for('search_recipes') }}" method="POST">
-                <div class="input-field col s6">
-                    <i class="material-icons prefix">search</i>
-                    <input id="icon_prefix" name="searchKey" type="text" class="validate">
-                    <label for="icon_prefix">Search Recipes</label>
-                </div>
-                <button class="btn waves-effect waves-light" type="submit">Search
-                <i class="material-icons right">search</i>
-             </button>
-            </form>
-        </div>
-        <div class="row">
-            {% for recipe in recipes %}
-            <div class="col s3 recipe">
-                <a href="/recipe/{{recipe._id}}">{{recipe.recipeName}} ({{recipe.views}} views)</a>
-
-            </div>
-            {% endfor %}
-        </div>
-
-        <div class="row">
-            {% for recipeV in recipesV %}
-            <div class="col s3 recipe">
-                <a href="/recipe/{{recipeV._id}}">{{recipeV.recipeName}} ({{recipeV.views}} views)</a>
-
-            </div>
-            {% endfor %}
-        </div>
-
-
-
-
-
-    </div>
+<!-- RECIPES -->
+<div class="row">
     <div class="col s6 col m9">
         Amount of recipes: {{recipes.count()}} recipes
     </div>
 
-    <span>PAGE</span> {% for page in pages %}
-    <a href="/recipes/{{page}}">{{page}}</a> {% endfor %}
+
+    <div class="col s6">
+        <h2>Most Recent Recipes</h2>
+
+        {% for recipe in recipes %}
+        <div class="col s6">
+            <a class='dropdown-button btn' href='#' data-activates='{{recipe._id}}'>{{recipe.recipeName}}</a>
+            <ul id='{{recipe._id}}' class='dropdown-content'>
+                <li><a href="/recipe/{{recipe._id}}">{{recipe.recipeName}} ({{recipe.prepTime}})</a></li>
+                <li>
+                    <p>Allergens: {% for allergen in recipe.allergens %} {{allergen}} {% endfor %}</p>
+                </li>
+
+                <li>
+                    <p>Keywords: {% for keyword in recipe.keywords %} {{keyword}} {% endfor %}</p>
+                </li>
+                <li>
+                    <p>{{recipe.views}} views since {{recipe.dateEntered}}</p>
+                </li>
+            </ul>
+        </div>
+        <br>
+        {% endfor %}
+    </div>
+
+
+
+
+
+
+    <div class="col s6">
+        <h2>Most Popular Recipes</h2>
+        {% for recipeV in recipesV %}
+        <div class="col s6">
+            <a class='dropdown-button btn' href='#' data-activates='{{recipeV._id}}'>{{recipeV.recipeName}}</a>
+            <ul id='{{recipeV._id}}' class='dropdown-content'>
+                <li><a href="/recipe/{{recipeV._id}}">{{recipeV.recipeName}} ({{recipeV.prepTime}})</a></li>
+                <li>
+                    <p>Allergens: {% for allergen in recipeV.allergens %} {{allergen}} {% endfor %}</p>
+                </li>
+
+                <li>
+                    <p>Keywords: {% for keyword in recipeV.keywords %} {{keyword}} {% endfor %}</p>
+                </li>
+                <li>
+                    <p>{{recipeV.views}} views since {{recipeV.dateEntered}}</p>
+                </li>
+            </ul>
+        </div>
+        {% endfor %}
+    </div>
 </div>
-</div>
-</div>
+
+
+
+
+
+
+<ul class="pagination">
+    
+    <li class="waves-effect"><a href="/recipes/{{prevPage}}"><i class="material-icons">chevron_left</i></a></li>
+    {% for linkPage in pages %}
+    {% if linkPage == page %}
+    <li class="active"><a href="/recipes/{{linkPage}}">{{linkPage}}</a></li>
+    {% else %}
+    <li><a href="/recipes/{{linkPage}}">{{linkPage}}</a></li>
+    {% endif %}
+    {% endfor %}
+    <li class="waves-effect"><a href="/recipes/{{nextPage}}"><i class="material-icons">chevron_right</i></a></li>
+  </ul>
+
+
+
+
+
+
 {% endblock %}

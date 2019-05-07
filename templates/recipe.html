@@ -1,54 +1,71 @@
 {% extends 'base.html' %} {% block content %}
 
+<!-- TOP ROW MENU -->
+<div class="row">
+    <div class="col s12">
+        <ul class="tabs">
+            <li class="tab col s6 active"><a href="{{ url_for('recipes', page=1) }}" target="_self">Search Recipes</a></li>
+            <li class="tab col s6 active"><a href="{{ url_for('create') }}" target="_self">Add Recipe</a></li>
+        </ul>
+    </div>
+</div>
+
 
 <div class="row">
-    <div class="col s3 checkboxes">
-      
 
+    <!--INGREDIENTS-->
+    <div class="col s12 m4">
+        <h4>Ingredients</h4>
 
+        <ul>
+            {% for ingredient in recipe.ingredients %}
+            <li style="list-style-type:disc;">{{ingredient}}</li>
+            {% endfor %}
+        </ul>
+
+        <span>Allergens:</span> {% for allergen in recipe.allergens %} <span>{{allergen}}, </span> {% endfor %}</span><br>
+        <span>Keywords:</span> {% for keyword in recipe.keywords %} <span>{{keyword}}, </span> {% endfor %}</span>
     </div>
+
+    <!--DIRECTIONS-->
+
     <div class="row">
-        <div class="col s9 recipe">
-            <h2>{{recipe.recipeName}}</h2>
-        </div>
-
-        <div class="col s3 views">
-            Views: {{views}}
-        </div>
-
-        <div class="col s9"></div>
-
-
-        <div class="col s3">
-            <h4>Ingredients</h4>
-
-            <ul>
-                {% for ingredient in recipe.ingredients %}
-                <li style="list-style-type:disc;">{{ingredient}}</li>
-                {% endfor %}
-            </ul>
-
-            <span>Allergens:</span> {% for allergen in recipe.allergens %} <span>{{allergen}}, </span> {% endfor %}</span><br>
-            <span>Keywords:</span> {% for keyword in recipe.keywords %} <span>{{keyword}}, </span> {% endfor %}</span>
-        </div>
-
-        <div class="col s4">
-            <h4>Instructions</h4>
-            {{recipe.directions}}
+        <div class="col s12 m8 recipe">
+            <h2 class="col s9">{{recipe.recipeName}}</h2>
+            <div class="col s3 views">
+                Views: {{recipe.views}}
+            </div>
+            <div class="col s3">
+                Date added: {{recipe.dateEntered}}
+            </div>
+            <div class="col s9"></div>
+            <div class="col s12">
+                <h4>Instructions</h4>
+                {{recipe.directions}}
+            </div>
         </div>
     </div>
 </div>
+<!--EDIT/DELETE-->
 <div class="row">
-    <form method="GET" action="/edit/{{recipe._id}}">
+    <div class="col s8"></div>
+    <form class="col s2" method="GET" action="/edit/{{recipe._id}}">
         <button class="btn waves-effect waves-light" type="submit">Edit Recipe
         <i class="material-icons left">edit</i></button>
     </form>
 
-    <form method="GET" action="{{ url_for('delete', recipe_id=recipe._id) }}">
+    <form class="col s2" method="GET" action="{{ url_for('delete', recipe_id=recipe._id) }}">
         <button class="btn waves-effect waves-light" type="submit">Delete Recipe
         <i class="material-icons left">delete_forever</i></button>
     </form>
 </div>
 
+<div class="row">
+    <div class="col s4"></div>
+    CONTACT DETAILS
 </div>
+
+
+
+
 {% endblock %}

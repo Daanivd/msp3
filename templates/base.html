@@ -4,18 +4,11 @@
 <head>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-    <link rel="stylesheet" href="/static/css/style.css" type="text/css"/>
+    <link rel="stylesheet" href="/static/css/style.css" type="text/css" />
 </head>
 
 <body>
-    <div class="row">
-        <div class="col s12">
-            <ul class="tabs">
-                <li class="tab col s6"><a href="{{ url_for('recipes', page=1) }}" target="_self">Search Recipes</a></li>
-                <li class="tab col s6"><a href="{{ url_for('create') }}" target="_self">Add Recipe</a></li>
-            </ul>
-        </div>
-    </div>
+    
 
     {% block content %} {% endblock %}
 
@@ -26,6 +19,21 @@
     <script>
         $(document).ready(function() {
             $('select').material_select();
+       
+
+        $('.dropdown-button').dropdown({
+            inDuration: 300,
+            outDuration: 225,
+            constrainWidth: false, // Does not change width of dropdown to that of the activator
+            hover: true, // Activate on hover
+            gutter: 0, // Spacing from edge
+            belowOrigin: false, // Displays dropdown below the button
+            alignment: 'left', // Displays dropdown with edge aligned to the left of button
+            stopPropagation: false // Stops event propagation
+        });
+        
+        $('.chips').material_chip();
+        $('ul.tabs').tabs('select_tab', 'tab_id');
         });
     </script>
 </body>

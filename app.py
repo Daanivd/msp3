@@ -18,27 +18,35 @@ mongo = PyMongo(app)
 def recipes(page):
       allergensF = request.args.getlist('allergensF')
       dietF = request.args.getlist('dietF')
+     # searchKey = request.args.getlist('searchKey')
       if dietF == []:
-        dietF = ['Vegetarian', 'Vegan', 'Meat', 'Fish']
+        dietF = ['vegetarian', 'vegan', 'meat', 'fish']
+          
       recipes = mongo.db.recipes.find({'$and':[{'diet': {'$in': dietF}}, {'allergens': {'$nin': allergensF}}]}).sort('dateEntered',-1)
       recipesV = mongo.db.recipes.find({'$and':[{'diet': {'$in': dietF}}, {'allergens': {'$nin': allergensF}}]}).sort('views', -1)
       total = recipes.count()
       nPerPage = 4
       pages = list(range(1,-(-total//nPerPage)+1))
+      if int(page) > 1:
+          prevPage = int(page) - 1
+      else:
+          prevPage = 1
+      if int(page) < len(pages): 
+          nextPage = int(page) + 1
+      else:
+          nextPage = len(pages)
+          
       skip = (int(page)-1)*nPerPage
       recipes=recipes.skip(skip).limit(nPerPage)
       recipesV=recipesV.skip(skip).limit(nPerPage)
-      return render_template('recipes.html', dietF=dietF, allergensF=allergensF, page=page, recipes = recipes, recipesV = recipesV, pages=pages, types=mongo.db.type.find(), allergens=mongo.db.allergens.find())
+      return render_template('recipes.html', dietF=dietF, allergensF=allergensF, page=int(page), prevPage=prevPage, nextPage=nextPage, recipes = recipes, recipesV = recipesV, pages=pages, types=mongo.db.type.find(), allergens=mongo.db.allergens.find())
 
 @app.route('/filter_recipes', methods=['POST'])
 def filter_recipe():
     
     allergensF = request.form.getlist('allergens')
     dietF = request.form.getlist('diet')
-    #mongo.db.filters.update_one({},{'$set': {'dietF': dietF,
-       #                                  'allergensF': allergensF}})
-    
-#filteredRecipes = mongo.db.recipes.find({'diet': {'all': diet}, 'allergens': {'nin': allergens}})
+   # searchKey = request.form['searchKey']
                                             
     return redirect(url_for('recipes', page=1, dietF = dietF, allergensF = allergensF))
 
@@ -68,18 +76,18 @@ def add_recipe():
     keywords = request.form['keywords']
     keywords = keywords.strip().split(',')
     
-    recipes.insert_one({'recipeName': recipeName.lower(), 
+    recipes.insert_one({'recipeName': recipeName, 
                         'dateEntered': dateEntered,
-                        'servings': servings.lower(), 
-                        'prepTime': prepTime.lower(), 
-                        'diet': diet.lower(), 
-                        'ingredients': ingredients.lower(), 
-                        'directions': directions.lower(),
-                        'allergens': allergens.lower(), 
-                        'keywords': keywords.lower(), 
+                        'servings': servings, 
+                        'prepTime': prepTime, 
+                        'diet': diet, 
+                        'ingredients': ingredients, 
+                        'directions': directions,
+                        'allergens': allergens, 
+                        'keywords': keywords, 
                         'views': 0})
     
-    return redirect(url_for('recipes'))
+    return redirect(url_for('recipes', page=1))
          
      
 @app.route('/edit/<recipe_id>')

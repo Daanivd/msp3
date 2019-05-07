@@ -3,7 +3,7 @@ from flask import Flask, render_template, redirect, request, url_for, session
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId 
 import datetime
-from flask_paginate import Pagination, get_page_parameter
+
 
 app = Flask(__name__)
 app.config['MONGO_DBNAME'] = 'recipeDB'
@@ -13,7 +13,10 @@ mongo = PyMongo(app)
 
 
 
-#@app.route('/')
+@app.route('/')
+def landing_page():
+     return redirect(url_for('recipes', page=1))
+    
 @app.route('/recipes/<page>', methods=['GET'])    
 def recipes(page):
       allergensF = request.args.getlist('allergensF')

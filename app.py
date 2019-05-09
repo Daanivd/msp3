@@ -4,33 +4,36 @@ from flask_pymongo import PyMongo
 from bson.objectid import ObjectId 
 import datetime
 
-
 app = Flask(__name__)
 app.config['MONGO_DBNAME'] = 'recipeDB'
+
+#Use line12 for deployment through eg. Cloud9. Use line 13 deployment through Heroku (with MONGO_URI saved to vars in Heroku)
+#app.config['MONGO_URI'] = MONGO_URI 
 app.config['MONGO_URI'] = os.getenv('MONGO_URI', 'mongodb://localhost')
-#app.config['MONGO_URI'] = MONGO_URI
-
-
-
-
 mongo = PyMongo(app)
 
+##### APP.ROUTES #####
 
-
+# Redirect to Recipes Page
 @app.route('/')
 def landing_page():
      return redirect(url_for('recipes', page=1))
-    
+  
+  
+# Recipes Page    
 @app.route('/recipes/<page>', methods=['GET'])    
 def recipes(page):
       allergensF = request.args.getlist('allergensF')
       dietF = request.args.getlist('dietF')
-     # searchKey = request.args.getlist('searchKey')
+     
       if dietF == []:
-        dietF = ['vegetarian', 'vegan', 'meat', 'fish']
-          
-      recipes = mongo.db.recipes.find({'$and':[{'diet': {'$in': dietF}}, {'allergens': {'$nin': allergensF}}]}).sort('dateEntered',-1)
-      recipesV = mongo.db.recipes.find({'$and':[{'diet': {'$in': dietF}}, {'allergens': {'$nin': allergensF}}]}).sort('views', -1)
+        recipes = mongo.db.recipes.find({'allergens': {'$nin': allergensF}}).sort('dateEntered',-1)
+        recipesV = mongo.db.recipes.find({'allergens': {'$nin': allergensF}}).sort('views',-1)
+      else:
+        recipes = mongo.db.recipes.find({'$and':[{'diet': {'$in': dietF}}, 
+                                        {'allergens': {'$nin': allergensF}}]}).sort('dateEntered',-1)
+        recipesV = mongo.db.recipes.find({'$and':[{'diet': {'$in': dietF}}, 
+                                        {'allergens': {'$nin': allergensF}}]}).sort('views',-1)
       total = recipes.count()
       nPerPage = 4
       pages = list(range(1,-(-total//nPerPage)+1))
@@ -46,29 +49,37 @@ def recipes(page):
       skip = (int(page)-1)*nPerPage
       recipes=recipes.skip(skip).limit(nPerPage)
       recipesV=recipesV.skip(skip).limit(nPerPage)
-      return render_template('recipes.html', dietF=dietF, allergensF=allergensF, page=int(page), prevPage=prevPage, nextPage=nextPage, recipes = recipes, recipesV = recipesV, pages=pages, types=mongo.db.type.find(), allergens=mongo.db.allergens.find())
+      return render_template('recipes.html', dietF=dietF, allergensF=allergensF, page=int(page), 
+                             prevPage=prevPage, nextPage=nextPage, recipes = recipes, recipesV = recipesV, 
+                             pages=pages, types=mongo.db.type.find(), allergens=mongo.db.allergens.find())
 
+
+# Filter Recipes Function based on Allergens and Diet
 @app.route('/filter_recipes', methods=['POST'])
 def filter_recipe():
-    
     allergensF = request.form.getlist('allergens')
     dietF = request.form.getlist('diet')
-   # searchKey = request.form['searchKey']
-                                            
     return redirect(url_for('recipes', page=1, dietF = dietF, allergensF = allergensF))
 
+
+# Single Recipe Page
 @app.route('/recipe/<recipe_id>')
 def view_recipe(recipe_id):
     the_recipe =  mongo.db.recipes.find_one({'_id': ObjectId(recipe_id)})
     views = the_recipe['views']
     views = views + 1
-    mongo.db.recipes.update_one({'_id': ObjectId(recipe_id)}, {'$set': {'views': views}})
+    mongo.db.recipes.update_one({'_id': ObjectId(recipe_id)}, 
+                                {'$set': {'views': views}})
     return render_template('recipe.html', recipe=the_recipe, views=views)
  
+ 
+# Add Recipe Page 
 @app.route('/create')
 def create():
      return render_template('create.html', types=mongo.db.type.find(), allergens=mongo.db.allergens.find())
-     
+    
+    
+# Add Recipe to MongoDB Database Function     
 @app.route('/add_recipe', methods=['POST'])
 def add_recipe():
     dateEntered = datetime.datetime.now().strftime('%d-%m-%y')
@@ -82,7 +93,6 @@ def add_recipe():
     diet = request.form.getlist('diet')
     keywords = request.form['keywords']
     keywords = keywords.strip().split(',')
-    
     recipes.insert_one({'recipeName': recipeName, 
                         'dateEntered': dateEntered,
                         'servings': servings, 
@@ -93,16 +103,18 @@ def add_recipe():
                         'allergens': allergens, 
                         'keywords': keywords, 
                         'views': 0})
-    
     return redirect(url_for('recipes', page=1))
          
-     
+
+# Edit Recipe Page     
 @app.route('/edit/<recipe_id>')
 def edit(recipe_id):
      the_recipe =  mongo.db.recipes.find_one({'_id': ObjectId(recipe_id)})
      recipes = mongo.db.recipes
      return render_template('edit.html', recipe=the_recipe, types=mongo.db.type.find(), allergens=mongo.db.allergens.find()) 
     
+    
+# Submit Edits to Recipe to MongoDB Function    
 @app.route('/submit_edit/<recipe_id>', methods=['POST'])
 def submit_edit(recipe_id):
     directions = request.form['directions']
@@ -123,18 +135,20 @@ def submit_edit(recipe_id):
     views = views + 1
     return redirect(url_for('recipes', page=1))
     
-     
+ 
+# Delete Recipe from MongoDB Function     
 @app.route('/delete/<recipe_id>')
 def delete(recipe_id):
      mongo.db.recipes.delete_one({'_id': ObjectId(recipe_id)})
      return redirect(url_for('recipes', page=1))   
     
 
-@app.route('/search_recipes', methods=['POST'])
-def search_recipes():
-    searchKey = request.form['searchKey']
-    searchResults = mongo.db.recipes.find({'keywords': searchKey})
-    return render_template('recipes.html', page=1, recipes=searchResults)
+
+#@app.route('/search_recipes', methods=['POST'])
+#def search_recipes():
+#    searchKey = request.form['searchKey']
+#    searchResults = mongo.db.recipes.find({'keywords': searchKey})
+#    return render_template('recipes.html', page=1, recipes=searchResults)
      
     
 if __name__ == '__main__':

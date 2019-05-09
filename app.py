@@ -7,9 +7,9 @@ import datetime
 app = Flask(__name__)
 app.config['MONGO_DBNAME'] = 'recipeDB'
 
-#Use line12 for deployment through eg. Cloud9. Use line 13 deployment through Heroku (with MONGO_URI saved to vars in Heroku)
-#app.config['MONGO_URI'] = MONGO_URI 
-app.config['MONGO_URI'] = os.getenv('MONGO_URI', 'mongodb://localhost')
+#Use line12 for deployment through eg. Cloud9. Use line 12 deployment through Heroku (with MONGO_URI saved to vars in Heroku)
+app.config['MONGO_URI'] = MONGO_URI 
+#app.config['MONGO_URI'] = os.getenv('MONGO_URI', 'mongodb://localhost')
 mongo = PyMongo(app)
 
 ##### APP.ROUTES #####

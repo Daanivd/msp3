@@ -1,7 +1,56 @@
+/* RECIPES */
+
 .recipe {
     margin-bottom: 50px;
 }
 
-div.id {
-    display: hidden !important;
+.btn {
+    width: 90%;
 }
+
+.pagination {
+    text-align: center;
+}
+
+h4 {
+    text-align: center;
+}
+
+
+
+.divide {
+    background-color: black;
+    width: 2px;
+    height: 100%;
+    margin: 0 auto;
+}
+
+img.logo {
+    width: 5%;
+    vertical-align: middle;
+    margin-bottom: 10px;
+}
+
+.contact {
+    text-align: center;
+}
+
+
+
+/*RECIPE*/
+
+
+
+
+.cancel {
+    color: red;
+}
+
+
+/*Contact modal */
+
+.form-group {
+    margin-bottom: 1rem
+}
+
+

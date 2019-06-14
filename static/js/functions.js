@@ -8,21 +8,16 @@ $(document).ready(function() {
         var NewIngredient = ""
         $('select').material_select();
     });
-
-    $('i').click(function() {
-        var id = ($(this).parent()[0].id);
-        console.log(id)
-        $('input[value=' + id + ']').removeClass('active').addClass('selected');
-
-
+    
+    
+    n=1;
+    $('.addStep').click(function() {
+        n++;
+        var NewStep = '<div class="input-field"><textarea  name="directions" class="materialize-textarea"></textarea><label for="directions">Step '+n+'</label></div>'
+        $(".directions").append(NewStep);
+        var NewStep = ""
+        $('select').material_select();
     });
 
-   
-        // Get height for textarea div in edit/add recipe routes
-        height = $('.height').outerHeight();
-        console.log(height);
-        $(".directions").outerHeight(height);
-
-
-
+ 
 });

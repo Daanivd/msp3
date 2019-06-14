@@ -30,13 +30,13 @@
                 <div class="card blue-grey darken-1">
                     <div class="card-content white-text height">
                         <div class="ingredients">
-                        <span class="card-title">Ingredients</span> {% for ingredient in recipe.ingredients %}
-                        
-                        <div class="input-field">
-                            <input id="ingredients" type="text" name="ingredients" value="{{ingredient}}">
-                            <label for="ingredients"></label>
-                        </div>
-                        {% endfor %}
+                            <span class="card-title">Ingredients</span> {% for ingredient in recipe.ingredients %}
+
+                            <div class="input-field">
+                                <input id="ingredients" type="text" name="ingredients" value="{{ingredient}}">
+                                <label for="ingredients"></label>
+                            </div>
+                            {% endfor %}
                         </div>
                     </div>
 
@@ -80,17 +80,23 @@
                 <div class="card blue-grey darken-1">
                     <div class="card-content white-text directions">
                         <span class="card-title">Directions</span>
-                        <div class="input-field col s12">
-                            <textarea class="blue-grey directions" name="directions" class="materialize-textarea">{{recipe.directions}}</textarea>
-                            <label for="directions"></label>
-                        </div>
+                        <ol>
+                            {% for step in recipe.directions %}
+                            <li>
+                                <div class="input-field">
+                                    <textarea name="directions" class="materialize-textarea">{{step}}</textarea>
+                                    <label for="directions"></label>
+                                </div>
+                            </li>
+                            <br> {% endfor %}
+                        </ol>
                     </div>
                 </div>
 
             </div>
         </div>
 
-        
+
 
         <!--SUBMIT DATA -->
         <div class="row">
@@ -100,6 +106,6 @@
         </div>
 
     </form>
-    </div>
+</div>
 
-   {% endblock %}
+{% endblock %}

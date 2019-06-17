@@ -78,22 +78,26 @@
 
         {% for recipeV in recipesV %}
         <div class="recipe col s12">
-            <div class="card blue-grey darken-1">
-                <div class="card-content white-text">
-                    <h4 class="card-title"><a class="white-text" href="/recipe/{{recipeV._id}}">{{recipeV.recipeName}} ({{recipeV.prepTime}})</a></h4>
-                    <div class="card-action">
-                        <p>{{recipeV.views}} views since {{recipeV.dateEntered}}</p>
-                        <p>Preparation time: ({{recipeV.prepTime}})</p>
-                        <span>Dietary Type: </span>{% for diet in recipeV.diet %}<img class="logo" title="{{diet}}" alt="{{diet}}" src="../static/images/diet/{{diet}}.png"></img> {% endfor %}
-                        <br>
-                        <span>Allergens: </span>{% for allergen in recipeV.allergens %}<img class="logo" title="{{allergen}}" alt="{{allergen}}" src="../static/images/allergens/{{allergen}}.png"></img> {% endfor %}
-                        <p>Keywords: {% for keyword in recipeV.keywords %} {{keyword}} {% endfor %}</p>
-                    </div>
+            <div class="card">
+                <div class="card-image waves-effect waves-block waves-light">
+                    <img class="activator" src="{{recipeV.image}}">
+                </div>
+                <div class="card-content">
+                    <span class="card-title activator grey-text text-darken-4">{{recipeV.recipeName}}</span>
+                    <p><a href="/recipe/{{recipeV._id}}">Check out this recipe!</a></p>
+                </div>
+                <div class="card-reveal">
+                    <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i>{{recipeV.recipeName}}</span>
+                    <p>{{recipeV.views}} views since {{recipeV.dateEntered}}</p>
+                    <p>Preparation time: ({{recipeV.prepTime}})</p>
+                    <span>Dietary Type: </span>{% for diet in recipeV.diet %}<img class="logo" title="{{diet}}" alt="{{diet}}" src="../static/images/diet/{{diet}}.png"></img> {% endfor %}
+                    <br>
+                    <span>Allergens: </span>{% for allergen in recipeV.allergens %}<img class="logo" title="{{allergen}}" alt="{{allergen}}" src="../static/images/allergens/{{allergen}}.png"></img> {% endfor %}
+                    <p>Keywords: {% for keyword in recipeV.keywords %} {{keyword}} {% endfor %}</p>
                 </div>
             </div>
         </div>
         {% endfor %}
-
     </div>
 
     <div class="col s12 m2">
@@ -104,23 +108,28 @@
         <h4>Most Recent Recipes</h4>
 
         {% for recipe in recipes %}
-        
-        <div class="recipe col s12">
-            <div class="card blue-grey darken-1">
-                <div class="card-content white-text">
-                    <h4 class="card-title"><a class="white-text" href="/recipe/{{recipe._id}}">{{recipe.recipeName}}</a></h4>
-                    <div class="card-action">
-                        <p>{{recipe.views}} views since {{recipe.dateEntered}}</p>
-                        <p>Preparation time: ({{recipe.prepTime}})</p>
-                        <span>Dietary Type: </span>{% for diet in recipe.diet %}<img class="logo" title="{{diet}}" alt="{{diet}}" src="../static/images/diet/{{diet}}.png"></img> {% endfor %}
-                        <br>
-                        <span>Allergens: </span>{% for allergen in recipe.allergens %}<img class="logo" title="{{allergen}}" alt="{{allergen}}" src="../static/images/allergens/{{allergen}}.png"></img> {% endfor %}
-                        <p>Keywords: {% for keyword in recipe.keywords %} {{keyword}} {% endfor %}</p>
-                    </div>
+
+       <div class="recipe col s12">
+            <div class="card">
+                <div class="card-image waves-effect waves-block waves-light">
+                    <img class="activator" src="{{recipe.image}}">
+                </div>
+                <div class="card-content">
+                    <span class="card-title activator grey-text text-darken-4">{{recipe.recipeName}}</span>
+                    <p><a href="/recipe/{{recipe._id}}">Check out this recipe!</a></p>
+                </div>
+                <div class="card-reveal">
+                    <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i>{{recipe.recipeName}}</span>
+                    <p>{{recipe.views}} views since {{recipe.dateEntered}}</p>
+                    <p>Preparation time: ({{recipe.prepTime}})</p>
+                    <span>Dietary Type: </span>{% for diet in recipe.diet %}<img class="logo" title="{{diet}}" alt="{{diet}}" src="../static/images/diet/{{diet}}.png"></img> {% endfor %}
+                    <br>
+                    <span>Allergens: </span>{% for allergen in recipe.allergens %}<img class="logo" title="{{allergen}}" alt="{{allergen}}" src="../static/images/allergens/{{allergen}}.png"></img> {% endfor %}
+                    <p>Keywords: {% for keyword in recipe.keywords %} {{keyword}} {% endfor %}</p>
                 </div>
             </div>
         </div>
-        
+
         {% endfor %}
     </div>
 

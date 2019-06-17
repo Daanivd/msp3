@@ -78,9 +78,9 @@
             <!--DIRECTIONS-->
             <div class="col s12 m8 directions">
                 <div class="card blue-grey darken-1">
-                    <div class="card-content white-text directions">
+                    <div class="card-content white-text">
                         <span class="card-title">Directions</span>
-                        <ol>
+                        <ol class="directions">
                             {% for step in recipe.directions %}
                             <li>
                                 <div class="input-field">
@@ -88,15 +88,22 @@
                                     <label for="directions"></label>
                                 </div>
                             </li>
-                            <br> {% endfor %}
+                            {% endfor %}
                         </ol>
+                        <a class="waves-effect waves-light btn-small addStep"><i class="material-icons left">add</i>Add Step</a>
+
                     </div>
                 </div>
 
             </div>
         </div>
 
-
+        <!-- IMAGE URL -->
+        <div class="input-field col s12">
+            <input id="image" name="image" type="text">
+            <label for="icon_prefix">{{recipe.image}}</label>
+        </div>
+    
 
         <!--SUBMIT DATA -->
         <div class="row">

@@ -7,7 +7,7 @@ import datetime
 app = Flask(__name__)
 app.config['MONGO_DBNAME'] = 'recipeDB'
 
-#Use line12 for deployment through eg. Cloud9. Use line 12 deployment through Heroku (with MONGO_URI saved to vars in Heroku)
+#Use line12 for deployment through eg. Cloud9. Use line 11 deployment through Heroku (with MONGO_URI saved to vars in Heroku)
 #app.config['MONGO_URI'] = MONGO_URI 
 app.config['MONGO_URI'] = os.getenv('MONGO_URI', 'mongodb://localhost')
 mongo = PyMongo(app)
@@ -86,13 +86,14 @@ def add_recipe():
     recipes = mongo.db.recipes
     servings = request.form['servings']
     prepTime = request.form['prepTime']
-    directions = request.form['directions']
+    directions = request.form.getlist('directions')
     recipeName = request.form['recipe_name']
     ingredients =  request.form.getlist('ingredients')
     allergens = request.form.getlist('allergens')
     diet = request.form.getlist('diet')
     keywords = request.form['keywords']
     keywords = keywords.strip().split(',')
+    image = request.form['image']
     recipes.insert_one({'recipeName': recipeName, 
                         'dateEntered': dateEntered,
                         'servings': servings, 
@@ -102,6 +103,7 @@ def add_recipe():
                         'directions': directions,
                         'allergens': allergens, 
                         'keywords': keywords, 
+                        'image': image,
                         'views': 0})
     return redirect(url_for('recipes', page=1))
          
@@ -124,12 +126,14 @@ def submit_edit(recipe_id):
     diet = request.form.getlist('diet')
     keywordString = request.form['keywords']
     keywords = keywordString.strip().split(',')
+    image = request.form['image']
     mongo.db.recipes.update_one({'_id': ObjectId(recipe_id)}, {'$set': {'recipeName': recipeName,
                                                                         'ingredients': ingredients,
                                                                         'directions': directions,
                                                                         'diet': diet,
                                                                         'allergens': allergens, 
-                                                                        'keywords': keywords}})
+                                                                        'keywords': keywords,
+                                                                        'image': image}})
     the_recipe = mongo.db.recipes.find_one({'_id': ObjectId(recipe_id)})
     views = the_recipe['views']
     views = views + 1

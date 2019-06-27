@@ -37,6 +37,8 @@ for recipes can use this website.
 
 ### Features Left to Implement
 - Search function based on keywords/recipe title/ingredients
+- Filter function written in Java instead of Python so no page reloading takes place during filtering
+- Image file upload instead of using links 
 
 
 ## Tech Used

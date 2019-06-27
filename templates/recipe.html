@@ -25,6 +25,7 @@
                 <ul>
                     {% for ingredient in recipe.ingredients %}
                     <li style="list-style-type:disc;">{{ingredient}}</li>
+                    <br>
                     {% endfor %}
                 </ul>
             </div>
@@ -41,7 +42,13 @@
     <div class="col s12 m8">
         <div class="card blue-grey darken-1">
             <div class="card-content white-text">
-                <span class="card-title">Directions</span> {{recipe.directions}}
+                <span class="card-title">Directions</span>
+                <ol>
+                    {% for step in recipe.directions %}
+                    <li>{{step}}</li>
+                    <br>
+                    {% endfor %}
+                </ol>
             </div>
         </div>
     </div>

@@ -13,8 +13,8 @@ This website is connected to an online database (MongoDB) where it stores recipe
  
 ### How does it work
  
-The backend uses **Python** to connect to the online database and perform the CRUD operations. The website is styled using **CSS** using **Materialize**. Additional logic was added
-using **JQuery** and **Javascript**. A contact email was linked through EmailJS
+The backend uses **Python** and the **Flask** framework to connect to the online database and perform CRUD operations. The website is styled using **CSS** using **Materialize**. Additional logic was added
+using **JQuery** and **Javascript**. A contact email was linked through **EmailJS**
 
 ## User Eperience Design
 
@@ -27,11 +27,30 @@ for recipes can use this website.
  
 ### Existing Features
 - Multiple page layout:
-    - Home page with all recipes (paginated) and filter functions based on diet/allergens.
+    - Home page with all recipes (paginated) and filter functions based on dietary preferences and/or allergens.
     - Single Recipe page with ingredients, directions, etc for a specific recipe (with links to 'Edit Page' or 'Delete function')
     - Edit page to edit a specific recipe through a form
     - Add page to add a recipe through a form
 - Contact link in footer of page
+
+### Database structure
+The database is on MongoDB and consists of three collections: 
+    - Recipes
+        - directions (array)
+        - servings (integer)
+        - ingredients (array)
+        - dateEntered (string)
+        - keywords (array)
+        - prepTime (string)
+        - recipeName (string)
+        - views (integer)
+        - diet (array)
+        - allergens (array)
+        - image (string)
+    - Type
+        - Four objects (string) for each dietary type (meat, fish, vegetarian, fish)
+    - Allergens 
+        - 14 objects (string) for each type of allergens
 
 
 
@@ -76,18 +95,21 @@ for recipes can use this website.
   - Firefox
   - Opera
 
-## Deployment
-
-### Deployment through Cloud9
+### Deployment through Cloud9 (AWSeducate)
 1. Create a blank workspace in your Cloud9 dashboard.
 2. Get all files from github using 'git clone https://github.com/Daanivd/msp3' command in the C9 CLI
-3. install Python dependies through !!!!!
-3. Open up msp3/app.py and click 'Run'. Click on the link for the running app, click 'open app' to view the website.
+3. install Python dependies with following command: 'pip3 install -r requirements.txt'
+3. Run app with following command: 'python3 app.py'. 
+4. Click on preview >> preview running application and get link
+5. Open up Link in browser of choice
 
 ### Deployment through Heroku
-!!!!
+1. Copy Github repository
+2. Make sure Procfile and requirements.txt for dependencies are correct.
+3. Created new heroku app and set environment variables (IP, PORT & MONGO_URI)
+4. Connect Github repository to Heroku App through 'Deployment Method' in Heroku App Dashboard
+5. Deploy Branch through Manual Deploy' in Heroku App Dashboard
 
-### Deployment through Github.io
 
 ## Contributing
 [recipes](https://sallysbakingaddiction.com/best-banana-cake/)
@@ -95,7 +117,7 @@ for recipes can use this website.
 [MongoDB](https://docs.mongodb.com/manual/tutorial/insert-documents/)
 
 ## Credits
-Recipes belong to [recipes](https://sallysbakingaddiction.com/best-banana-cake/)
+Recipes belong to [recipes](https://sallysbakingaddiction.com/)
 
 ### Media
 [meat symbol](https://www.google.com/url?sa=i&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwj2nZ-HvoviAhWJbFAKHUajABwQjRx6BAgBEAU&url=https%3A%2F%2Fwww.designspiration.net%2Fsave%2F27356255783901%2F&psig=AOvVaw3Wgow-xMzgzeyuj9Bnfrzx&ust=1557389464529574)
@@ -105,7 +127,7 @@ Recipes belong to [recipes](https://sallysbakingaddiction.com/best-banana-cake/)
 [allergy icons](http://chittagongit.com/icon/allergy-icon-27.html)
 
 ### Information/Data
-Recipes belong to [recipes](https://sallysbakingaddiction.com/best-banana-cake/)
+Recipes belong to [recipes](https://sallysbakingaddiction.com/)
 
 ### Additional sources
 [Query an Array Pymongo](https://docs.mongodb.com/manual/tutorial/query-arrays/)

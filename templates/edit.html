@@ -24,11 +24,32 @@
             </div>
         </div>
 
+
         <!--INGREDIENTS-->
         <div class="row">
             <div class="col s12 m4">
                 <div class="card blue-grey darken-1">
                     <div class="card-content white-text height">
+                        <!-- PREP TIME -->
+                        <div class="input-field">
+                            <input name="prepTime" type="text" value="{{ recipe.prepTime }}"></input>
+                            <label for="icon_prefix">Time to prepare</label>
+
+                        </div>
+
+                        <!--How many servings -->
+                        <div class="input-field">
+                            <select name="servings">
+                            {% for x in range(1, 9) %}
+                                {% if recipe.servings == x %}
+                                    <option value="{{ x }}" selected>{{ x }} serving</option>
+                                {% else %}
+                                    <option value="{{ x }}">{{ x }} serving</option>
+                                {% endif %}    
+                            {% endfor %}  
+                            </select>
+                            <label>How many servings?</label>
+                        </div>
                         <div class="ingredients">
                             <span class="card-title">Ingredients</span> {% for ingredient in recipe.ingredients %}
 
@@ -43,29 +64,35 @@
                     <a class="waves-effect waves-light btn-small addIngredient"><i class="material-icons left">add</i>Add Ingredient</a>
                     <br>
 
-                    <div class="card-action white-text">
+                    <div class="dietaryallergen card-action white-text">
+                        <!--Allergens-->
                         <div class="input-field ">
                             <select multiple name="allergens">
-                  {% for allergen in allergens %}
-                  {% if allergen.allergen in recipe.allergens %}
-                  <option value="{{allergen.allergen}}" selected>{{allergen.allergen}}</option>
-                  {% else %}
-                  <option value="{{allergen.allergen}}">{{allergen.allergen}}</option>
-                  {% endif %}
-                  {% endfor %}
-                </select>
+                              {% for allergen in allergens %}
+                              {% if allergen.allergen in recipe.allergens %}
+                              <option value="{{allergen.allergen}}" selected>{{allergen.allergen}}</option>
+                              {% else %}
+                              <option value="{{allergen.allergen}}">{{allergen.allergen}}</option>
+                              {% endif %}
+                              {% endfor %}
+                            </select>
                             <label>Select Allergens</label>
                         </div>
-                        <select multiple name="diet">
-                  {% for diet in types %}
-                  {% if diet.type in recipe.diet %}
-                  <option value="{{diet.type}}" selected>{{diet.type}}</option>
-                  {% else %}
-                  <option value="{{diet.type}}">{{diet.type}}</option>
-                  {% endif %}
-                  {% endfor %}
-                </select>
-                        <label>Select Dietary Type</label>
+                        
+                        <!--Dietary Types-->
+                        <div class="input-field ">
+                            <select multiple name="diet">
+                              {% for diet in types %}
+                              {% if diet.type in recipe.diet %}
+                              <option value="{{diet.type}}" selected>{{diet.type}}</option>
+                              {% else %}
+                              <option value="{{diet.type}}">{{diet.type}}</option>
+                              {% endif %}
+                              {% endfor %}
+                            </select>
+                            <label>Select Dietary Type</label>
+                        </div>
+                        
                         <!--Keywords-->
                         <div class="input-field">
                             <input id="keywords" type="text" name="keywords" value="{% for keyword in recipe.keywords %} {{keyword}}, {% endfor %} ">
@@ -100,10 +127,10 @@
 
         <!-- IMAGE URL -->
         <div class="input-field col s12">
-            <input id="image" name="image" type="text">
-            <label for="icon_prefix">{{recipe.image}}</label>
+            <input id="image" name="image" type="text" value="{{recipe.image}}">
+            <label for="icon_prefix">Image link</label>
         </div>
-    
+
 
         <!--SUBMIT DATA -->
         <div class="row">

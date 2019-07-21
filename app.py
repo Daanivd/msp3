@@ -4,11 +4,9 @@ from flask_pymongo import PyMongo
 from bson.objectid import ObjectId 
 import datetime
 
+
 app = Flask(__name__)
 app.config['MONGO_DBNAME'] = 'recipeDB'
-
-#Use line12 for deployment through eg. Cloud9. Use line 11 deployment through Heroku (with MONGO_URI saved to vars in Heroku)
-#app.config['MONGO_URI'] = MONGO_URI 
 app.config['MONGO_URI'] = os.getenv('MONGO_URI', 'mongodb://localhost')
 mongo = PyMongo(app)
 
@@ -92,7 +90,7 @@ def add_recipe():
     allergens = request.form.getlist('allergens')
     diet = request.form.getlist('diet')
     keywords = request.form['keywords']
-    keywords = keywords.strip().split(',')
+    keywords = keywords.replace(" ", "").split(',')
     image = request.form['image']
     recipes.insert_one({'recipeName': recipeName, 
                         'dateEntered': dateEntered,
@@ -119,13 +117,15 @@ def edit(recipe_id):
 # Submit Edits to Recipe to MongoDB Function    
 @app.route('/submit_edit/<recipe_id>', methods=['POST'])
 def submit_edit(recipe_id):
-    directions = request.form['directions']
+    servings = request.form['servings']
+    prepTime = request.form['prepTime']
+    directions = request.form.getlist('directions')
     recipeName = request.form['recipe_name']
     ingredients =  request.form.getlist('ingredients')
     allergens = request.form.getlist('allergens')
     diet = request.form.getlist('diet')
-    keywordString = request.form['keywords']
-    keywords = keywordString.strip().split(',')
+    keywords = request.form['keywords']
+    keywords = keywords.replace(" ", "").split(',')
     image = request.form['image']
     mongo.db.recipes.update_one({'_id': ObjectId(recipe_id)}, {'$set': {'recipeName': recipeName,
                                                                         'ingredients': ingredients,
@@ -147,14 +147,6 @@ def delete(recipe_id):
      return redirect(url_for('recipes', page=1))   
     
 
-
-#@app.route('/search_recipes', methods=['POST'])
-#def search_recipes():
-#    searchKey = request.form['searchKey']
-#    searchResults = mongo.db.recipes.find({'keywords': searchKey})
-#    return render_template('recipes.html', page=1, recipes=searchResults)
-     
-    
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
             port=int(os.environ.get('PORT')),

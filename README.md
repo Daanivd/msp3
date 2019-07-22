@@ -23,6 +23,15 @@ The website facilitates easy exploration of recipes present in the online databa
 recipe page. This page holds all the information such as ingredients, Directions Allergens, and Keywords. Anyone looking for an easy place to store their recipes or to search 
 for recipes can use this website. 
 
+### A person new visiting the website
+The website allows for easy browsing for anyone looking for recipes. Newly added or popular recipes are visible on the home page and easily accessed.Filtering by allergens/dietary type can be done. 
+Recipes that are not yet on the website can be easily added for easy future reference.
+
+### A person already familiar to the website
+It is easy to check if any new recipes has been added to the website by simply looking at the 'recently added' column since the last visit. The same holds true for any 
+recipes that have become popular in the meantime. Recipes that are not yet on the website can be easily added for easy future reference and changes to recipes
+are also easy to do. 
+
 ## Features
  
 ### Existing Features
@@ -50,7 +59,7 @@ The database is on MongoDB and consists of three collections:
     - Type
         - Four objects (string) for each dietary type (meat, fish, vegetarian, fish)
     - Allergens 
-        - 14 objects (string) for each type of allergens
+        - 14 objects (string) for each type of allergen
 
 
 
@@ -106,13 +115,13 @@ The database is on MongoDB and consists of three collections:
 ### Deployment through Heroku
 1. Copy Github repository
 2. Make sure Procfile and requirements.txt for dependencies are correct.
-3. Created new heroku app and set environment variables (IP, PORT & MONGO_URI)
+3. Create new heroku app and set environment variables (IP, PORT & MONGO_URI)
 4. Connect Github repository to Heroku App through 'Deployment Method' in Heroku App Dashboard
 5. Deploy Branch through Manual Deploy' in Heroku App Dashboard
 
 
 ## Contributing
-[recipes](https://sallysbakingaddiction.com/best-banana-cake/)
+[recipes](https://sallysbakingaddiction.com/)
 [Materialize](https://materializecss.com/)
 [MongoDB](https://docs.mongodb.com/manual/tutorial/insert-documents/)
 

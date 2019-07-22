@@ -1,19 +1,16 @@
 function sendMail(contactForm) {
-    emailjs.send('default_service', 'template_kM7czE4k', {
-            'from_name': contactForm.name.value,
-            'from_email': contactForm.email.value,
-            'subject': contactForm.subject.value,
-            'message': contactForm.message.value
-        })
+        emailjs.send("gmail", "template_kM7czE4k", 
+            {"from_name":contactForm.name.value,
+             "from_email":contactForm.email.value,
+             "subject":contactForm.subject.value,
+             "message":contactForm.message.value})
         .then(
             function(response) {
-                console.log('SUCCESS', response);
+                alert("E-mail sent, thank you!");
             },
-            
             function(error) {
-                console.log('FAILED', error);
+                alert("Our apologies, something went wrong./nPlease try again later");
             }
-        );
-    return false; // To block from loading a new page
+        )
+    return false // To block from loading a new page
 }
-

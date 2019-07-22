@@ -6,12 +6,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
     <link rel="stylesheet" href="../static/css/style.css" type="text/css" />
     <script type="text/javascript" src="https://cdn.emailjs.com/sdk/2.3.2/email.min.js"></script>
-    <script type="text/javascript">
-        (function() {
-            emailjs.init('user_JsCgifWzGzPgQmwuLy7sK');
-        })();
-    </script>
-
 </head>
 
 <body class="container">
@@ -44,12 +38,11 @@
                         <label for="subject">Subject</label>
                     </div>
 
-
                     <div class="form-group">
                         <label for="name"> Message:</label>
                         <textarea name="message" id="message" placeholder="Your Message Here" class="materialize-textarea"></textarea>
                     </div>
-                    <button class="right waves-effect waves-green btn-flat"> <a href="#!" class="modal-action modal-close">Send</a></button>
+                    <button type="submit" class="right waves-effect waves-green btn-flat modal-action modal-close">Send</button>
                 </form>
             </div>
         </div>
@@ -57,14 +50,14 @@
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-    <script src="../static/js/functions.js"></script>
-    <script src="../static/js/sendemail.js"></script>
+    <script type="text/javascript" src="../static/js/functions.js"></script>
+    <script type="text/javascript" src="../static/js/sendemail.js"></script>
     <script>
         $(document).ready(function() {
             $('select').material_select();
 
             $('.modal').modal();
-            
+
             $('.dropdown-button').dropdown({
                 inDuration: 300,
                 outDuration: 225,
@@ -75,6 +68,10 @@
                 alignment: 'left', // Displays dropdown with edge aligned to the left of button
                 stopPropagation: false // Stops event propagation
             });
+
+            (function() {
+                emailjs.init("user_JsCgifWzGzPgQmwuLy7sK");
+            })();
         });
     </script>
 </body>
